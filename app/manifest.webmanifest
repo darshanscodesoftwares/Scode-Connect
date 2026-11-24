@@ -1,0 +1,9 @@
+{
+  "id": "./", "name": "ScodeConnect", "short_name": "ScodeConnect",
+  "description": "Internship enquiries, candidates and batches for Scode.",
+  "start_url": "./", "scope": "./", "display": "standalone",
+  "theme_color": "#2047d7", "background_color": "#f7f8fa",
+  "icons": [
+    {"src":"./assets/scodeconnect-logo-only.png","sizes":"879x745","type":"image/png","purpose":"any"}
+  ]
+}

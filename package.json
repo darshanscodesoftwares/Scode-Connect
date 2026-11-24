@@ -1,0 +1,17 @@
+{
+  "name": "scode-connect",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server.js",
+    "start": "node --env-file-if-exists=.env server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22.9.0"
+  },
+  "dependencies": {
+    "lottie-web": "^5.12.2",
+    "pg": "^8.23.1"
+  }
+}
