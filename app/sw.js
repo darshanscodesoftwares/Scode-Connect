@@ -1,4 +1,4 @@
-const CACHE = "scode-connect-shell-v14";
+const CACHE = "scode-connect-shell-v15";
 const SHELL = [
   "./",
   "./index.html",

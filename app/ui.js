@@ -22,8 +22,50 @@ export const btn = (label, action, id = "", style = "secondary", glyph = "") =>
   `<button type="button" class="${style}" data-action="${action}" data-id="${esc(id)}">${glyph ? icon(glyph, 16) : ""}${esc(label)}</button>`;
 export const link = (label, route) =>
   `<a class="textlink" href="#/${route}">${esc(label)}</a>`;
-export const badge = (s) =>
-  `<span class="badge ${{ Interested: "green", Enrolled: "green", Active: "green", Completed: "green", New: "blue", Contacted: "purple", "Follow-up Required": "amber", Overdue: "red", "Due Today": "amber", Proposed: "purple", "Batch Proposed": "purple", High: "red", Confirmed: "blue", Snoozed: "purple" }[s] || "gray"}"><i></i>${esc(s)}</span>`;
+const statusDescriptions = {
+  New: "Recently added; ready for an initial contact.",
+  Contacted: "The candidate has been contacted.",
+  Interested: "The candidate is interested in an internship.",
+  "Follow-up Required": "Another contact or action is needed.",
+  "Batch Proposed": "A batch option has been proposed to this candidate.",
+  Enrolled: "The candidate has joined a batch.",
+  "Not Interested": "The candidate has declined or is no longer interested.",
+  Proposed: "The batch is suggested and awaiting planning.",
+  Planning: "The team is arranging the batch.",
+  Confirmed: "The batch has been confirmed.",
+  Active: "The batch is currently running.",
+  Completed: "The batch or follow-up is finished.",
+  Cancelled: "The batch will not proceed.",
+  Overdue: "This reminder's scheduled time has passed.",
+  "Due Today": "This reminder is scheduled for today.",
+  Upcoming: "This reminder is scheduled for a future date.",
+  Snoozed: "This reminder was postponed to a later time.",
+  High: "This item needs higher priority attention.",
+  Normal: "This item has standard priority.",
+  Low: "This item has lower priority.",
+};
+const badgeColors = {
+  Interested: "green",
+  Enrolled: "green",
+  Active: "green",
+  Completed: "green",
+  New: "blue",
+  Contacted: "purple",
+  "Follow-up Required": "amber",
+  Overdue: "red",
+  "Due Today": "amber",
+  Proposed: "purple",
+  "Batch Proposed": "purple",
+  High: "red",
+  Confirmed: "blue",
+  Snoozed: "purple",
+};
+export const badge = (s) => {
+  const description = statusDescriptions[s];
+  const id = `status-tip-${s.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  const accessibleText = description ? `${s}: ${description}` : s;
+  return `<span class="badge-wrap">${description ? `<span class="badge-tip" role="tooltip">${esc(description)}</span>` : ""}<span class="badge ${badgeColors[s] || "gray"}" tabindex="0" aria-label="${esc(accessibleText)}"${description ? ` aria-describedby="${id}"` : ""}><i></i>${esc(s)}</span>${description ? `<span id="${id}" class="sr-only">${esc(description)}</span>` : ""}</span>`;
+};
 export const empty = (s) =>
   `<div class="empty">${icon("inbox", 24)}<span>${esc(s)}</span></div>`;
 export const options = (values, selected = "") =>

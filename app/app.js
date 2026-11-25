@@ -436,9 +436,15 @@ const workspaceResult = openWorkspace().then(
   (value) => ({ value }),
   (error) => ({ error }),
 );
+const workspaceTimeout = new Promise((resolve) =>
+  setTimeout(
+    () => resolve({ error: Error("Workspace startup took too long. Reload to try again.") }),
+    10000,
+  ),
+);
 try {
   const [workspace] = await Promise.all([
-    workspaceResult,
+    Promise.race([workspaceResult, workspaceTimeout]),
     hardcodedLaunchDelay,
   ]);
   if (workspace.error) throw workspace.error;

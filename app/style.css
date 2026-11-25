@@ -908,6 +908,53 @@ main {
   line-height: 1.2;
   max-width: 100%;
 }
+.badge-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+}
+.badge-tip {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  bottom: calc(100% + 7px);
+  width: max-content;
+  max-width: min(240px, 75vw);
+  padding: 7px 10px;
+  border: 1px solid #e5e8f0;
+  border-radius: 8px;
+  background: #fff;
+  color: #4e586b;
+  box-shadow: 0 5px 18px #202b4018;
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 3px);
+  transition: opacity 140ms ease, transform 140ms ease, visibility 140ms;
+  pointer-events: none;
+}
+.badge-wrap:hover .badge-tip,
+.badge-wrap:focus-within .badge-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 .badge i {
   width: 4px;
   height: 4px;

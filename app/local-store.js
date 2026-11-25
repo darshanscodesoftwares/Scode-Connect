@@ -27,11 +27,19 @@ export async function openDatabase() {
   }
   await new Promise((resolve) => {
     let req;
+    let settled = false;
+    const finish = (useFallback = false) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      if (useFallback) enableFallback();
+      resolve();
+    };
+    const timer = setTimeout(() => finish(true), 1800);
     try {
       req = indexedDB.open("scode-connect-demo-v1", 1);
     } catch {
-      enableFallback();
-      resolve();
+      finish(true);
       return;
     }
     req.onupgradeneeded = () => {
@@ -44,15 +52,14 @@ export async function openDatabase() {
     };
     req.onsuccess = () => {
       db = req.result;
-      resolve();
+      db.onversionchange = () => db.close();
+      finish();
     };
     req.onerror = () => {
-      enableFallback();
-      resolve();
+      finish(true);
     };
     req.onblocked = () => {
-      enableFallback();
-      resolve();
+      finish(true);
     };
   });
 }
